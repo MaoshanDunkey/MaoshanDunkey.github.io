@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Git笔记 - Blog - Maoshan Dunkey</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Blog - Maoshan Dunkey"><meta name="msapplication-TileImage" content="/img/1.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Blog - Maoshan Dunkey"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="版本控制​		版本控制(Revision control)是一种在开发的过程中用于管理我们对文件、目录或工程等内容的修改历史，方便查看更改历史记录，备份以便恢复之前的版本的软件工程技术。同时也便于管理多人协同开发项目。 主流的版本控制器便是Git 集中版本控制 SVN ​		所有的版本数据都保存在中央服务器上，协同开发者从服务器上同步更新或上传自己的修改。 ​		用户的本地只有自己以前所同步的版本"><meta property="og:type" content="blog"><meta property="og:title" content="Git笔记"><meta property="og:url" content="https://maoshandunkey.top/2023/01/01/Git-note/"><meta property="og:site_name" content="Blog - Maoshan Dunkey"><meta property="og:description" content="版本控制​		版本控制(Revision control)是一种在开发的过程中用于管理我们对文件、目录或工程等内容的修改历史，方便查看更改历史记录，备份以便恢复之前的版本的软件工程技术。同时也便于管理多人协同开发项目。 主流的版本控制器便是Git 集中版本控制 SVN ​		所有的版本数据都保存在中央服务器上，协同开发者从服务器上同步更新或上传自己的修改。 ​		用户的本地只有自己以前所同步的版本"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/workflow.svg"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/reflog1.png"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/log1.png"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/restore1.png"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/reset.svg"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/branch1.png"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/branch2.png"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/branch3.png"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/branch4.png"><meta property="og:image" content="https://maoshandunkey.top/2023/01/01/Git-note/branch5.png"><meta property="article:published_time" content="2023-01-01T03:53:32.000Z"><meta property="article:modified_time" content="2023-01-01T14:28:40.579Z"><meta property="article:author" content="Maoshan Dunkey"><meta property="article:tag" content="笔记"><meta property="article:tag" content="Git"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://maoshandunkey.top/2023/01/01/Git-note/workflow.svg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://maoshandunkey.top/2023/01/01/Git-note/"},"headline":"Git笔记","image":["https://maoshandunkey.top/2023/01/01/Git-note/reflog1.png","https://maoshandunkey.top/2023/01/01/Git-note/log1.png","https://maoshandunkey.top/2023/01/01/Git-note/restore1.png","https://maoshandunkey.top/2023/01/01/Git-note/branch1.png","https://maoshandunkey.top/2023/01/01/Git-note/branch2.png","https://maoshandunkey.top/2023/01/01/Git-note/branch3.png","https://maoshandunkey.top/2023/01/01/Git-note/branch4.png","https://maoshandunkey.top/2023/01/01/Git-note/branch5.png"],"datePublished":"2023-01-01T03:53:32.000Z","dateModified":"2023-01-01T14:28:40.579Z","author":{"@type":"Person","name":"Maoshan Dunkey"},"publisher":{"@type":"Organization","name":"Blog - Maoshan Dunkey","logo":{"@type":"ImageObject","url":"https://maoshandunkey.top/img/1.png"}},"description":"版本控制​\t\t版本控制(Revision control)是一种在开发的过程中用于管理我们对文件、目录或工程等内容的修改历史，方便查看更改历史记录，备份以便恢复之前的版本的软件工程技术。同时也便于管理多人协同开发项目。 主流的版本控制器便是Git 集中版本控制 SVN ​\t\t所有的版本数据都保存在中央服务器上，协同开发者从服务器上同步更新或上传自己的修改。 ​\t\t用户的本地只有自己以前所同步的版本"}</script><link rel="canonical" href="https://maoshandunkey.top/2023/01/01/Git-note/"><link rel="icon" href="/img/1.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cc323f0d2b2cc431dab0c205454dd4dc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><meta name="msvalidate.01" content="Maoshan Dunkey"><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=Maoshan Dunkey" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'Maoshan Dunkey');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/1.png" alt="Blog - Maoshan Dunkey" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-01-01T03:53:32.000Z" title="2023/1/1 11:53:32">2023-01-01</time>发表</span><span class="level-item"><time dateTime="2023-01-01T14:28:40.579Z" title="2023/1/1 22:28:40">2023-01-01</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Git笔记</h1><div class="content"><h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><p>​		版本控制(Revision control)是一种在开发的过程中用于管理我们对文件、目录或工程等内容的修改历史，方便查看更改历史记录，备份以便恢复之前的版本的软件工程技术。同时也便于管理多人协同开发项目。</p>
+<p>主流的版本控制器便是<strong>Git</strong></p>
+<p><strong>集中版本控制</strong> <strong>SVN</strong></p>
+<p>​		所有的版本数据都保存在中央服务器上，协同开发者从服务器上同步更新或上传自己的修改。</p>
+<p>​		用户的本地只有自己以前所同步的版本，如果不连网的话，用户就无法看到历史版本，也无法切换版本来验证问题。而且所有数据都保持在单一的服务器上，一旦服务器损坏，将会丢失所有的数据。</p>
+<span id="more"></span>
+
+<p><strong>分布式版本控制 Git</strong></p>
+<p>​		所有版本信息仓库会全部同步到本地的每个用户，这样就可以在本地查看所有版本历史，可以离线在本地提交，只需在连网时push到相应的服务器或其他用户哪里。由于每个用户保存的都是所有的版本数据，只要有一个用户的设备没有问题就可以恢复所有的数据，但这增加了本地存储空间的占用。</p>
+<p>​		每个人都拥有全部的代码，不会因为服务器损坏或者网络问题造成不能工作的情况。</p>
+<p>​		如果甲在电脑上改了文件A，乙也在电脑上改了文件A，此时，甲乙之间只需把各自的修改推送给对方，就可以相互看到对方的修改。</p>
+<h1 id="基本的Linux命令"><a href="#基本的Linux命令" class="headerlink" title="基本的Linux命令"></a>基本的Linux命令</h1><ul>
+<li>cd xx<br>进入当前目录下的xx目录</li>
+<li>cd ..<br>回退到上一个目录，直接cd进入默认目录</li>
+<li>pwd<br>显示当前所在的目录路径</li>
+<li>ls(ll)<br>列出当前目录中的所有文件，ll列出的内容更为详细</li>
+<li>touch<br>新建一个文件	如touch index.html 就会在当前目录下新建一个index.html文件</li>
+<li>rm<br>删除一个文件	如rm index.html就会把当前目录下的index.html删除</li>
+<li>mkdir<br>新建一个目录	如mkdir index就会在当前目录下新建一个index文件夹</li>
+<li>rm -r<br>删除一个文件夹	如rm -r src 删除当前目录下的src文件夹</li>
+<li>mv<br>移动文件，mv 源文件或目录 目标文件或目录</li>
+<li>reset<br>重新初始化终端&#x2F;清平</li>
+<li>clear<br>清屏</li>
+<li>history<br>查看命令历史</li>
+<li>exit<br>退出</li>
+<li>#表示注释</li>
+</ul>
+<h1 id="Git工作机制"><a href="#Git工作机制" class="headerlink" title="Git工作机制"></a>Git工作机制</h1><p>Git本地有三个区域：工作区(Workspace)、暂存区(Index\Stage)、本地仓库(Repository)。另外还有一个远程库(Remote Directory)。</p>
+<ul>
+<li><p>工作区：存放项目代码的地方</p>
+</li>
+<li><p>暂存区：用于临时存放改动，事实上它只是一个文件，保存即将提交的文件列表信息。需要将工作区的内容<strong>添加</strong>到暂存区</p>
+</li>
+<li><p>本地库：安全存放数据的位置，用于存放项目的历史版本。需要将暂存区的内容<strong>提交</strong>到本地库</p>
+</li>
+<li><p>远程库：代码托管中心。互联网中有GitHub、Gitee；局域网中有GitLab</p>
+<img src="/2023/01/01/Git-note/workflow.svg" style="zoom:100%;" position="center/"></li>
+</ul>
+<h1 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h1><p>​		</p>
+<table>
+<thead>
+<tr>
+<th>命令名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>git config –global user.name 用户名</td>
+<td>设置用户标识</td>
+</tr>
+<tr>
+<td>git config –global user.email 邮箱</td>
+<td>设置用户标识</td>
+</tr>
+<tr>
+<td><font color="red">git init</font></td>
+<td><font color="red">初始化本地库</font></td>
+</tr>
+<tr>
+<td><font color="red">git status</font></td>
+<td><font color="red">查看本地库状态</font></td>
+</tr>
+<tr>
+<td><font color="red">git add 文件名</font></td>
+<td><font color="red">添加到暂存区</font></td>
+</tr>
+<tr>
+<td><font color="red">git commit -m “日志信息” 文件名</font></td>
+<td><font color="red">提交到本地库</font></td>
+</tr>
+<tr>
+<td><font color="red">git reflog</font></td>
+<td><font color="red">查看历史版本</font></td>
+</tr>
+<tr>
+<td><font color="red">git reset –hard 版本号</font></td>
+<td><font color="red">版本穿梭</font></td>
+</tr>
+</tbody></table>
+<h2 id="设置用户名与邮箱-用户标识"><a href="#设置用户名与邮箱-用户标识" class="headerlink" title="设置用户名与邮箱(用户标识)"></a>设置用户名与邮箱(用户标识)</h2><p>首次安装必须先配置用户标识&#x2F;系统标识，用于确定当前使用者的身份。Git每次提交都会使用该信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name test #用户名</span><br><span class="line">git config --global user.email test@xxx.com	#邮箱</span><br></pre></td></tr></table></figure>
+
+<p>​		设置–global选项后，Git将总会使用该信息来处理用户在系统中所做的一切操作。如果希望在一个特定中的项目中使用不同的用户名或email，在该项目下运行该命令并且去掉–global选项。</p>
+<p><strong>查看相关配置内容</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#查看系统config</span><br><span class="line">git config -system --list</span><br><span class="line"></span><br><span class="line">#查看当前用户(global)配置</span><br><span class="line">git config --global --list</span><br></pre></td></tr></table></figure>
+
+<p>​		配置文件都是保存在本地计算机中的，因此可以到相关路径下查看。</p>
+<ul>
+<li><p>Git\etc\gitconfig:	–system 系统级</p>
+</li>
+<li><p>C:\Users&#39;user name’.gitconfig:	当前登录用户的配置	–global 全局</p>
+</li>
+</ul>
+<h2 id="一般流程"><a href="#一般流程" class="headerlink" title="一般流程"></a>一般流程</h2><ol>
+<li>要想让Git管理项目，先要<strong>初始化本地库</strong>。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>在项目路径下生成 <em>.git</em> 隐藏文件夹。</p>
+<ol start="2">
+<li>当我们代码编写完成之后，需要先<strong>添加到暂存区。</strong></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add test.txt</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>接着将暂存区的代码<strong>提交到本地库。</strong></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;first commit&quot; test.txt</span><br></pre></td></tr></table></figure>
+
+<p>当下一次在本地库修改代码后，重复上述操作。</p>
+<p>为了知道每个版本，可以<strong>查看历史版本。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/01/Git-note/reflog1.png"></p>
+<p>更详细地查看(每个版本都是谁提交的，什么时间提交的)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/01/Git-note/log1.png"></p>
+<p>如果当前版本不理想，可以进行<strong>版本穿梭</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 版本号</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/01/Git-note/restore1.png"></p>
+<p><strong>此时工作区内的文件回溯到该版本。</strong></p>
+<p>版本切换的<font color="red">底层原理</font>如图所示。</p>
+<img src="/2023/01/01/Git-note/reset.svg" style="zoom:100%;" position="center/">
+
+<h1 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h1><h2 id="什么是分支"><a href="#什么是分支" class="headerlink" title="什么是分支"></a>什么是分支</h2><p>在版本控制过程中，同时推进多个任务，为每个任务，我们可以创建每个任务的单独分支。使用分支意味着程序员可以把自己的工作从开发主线上分离出来，开发自己分支的时候，不会影响主线分支的运行。</p>
+<h2 id="分支的好处"><a href="#分支的好处" class="headerlink" title="分支的好处"></a>分支的好处</h2><p>同时并行推进多个功能开发，提高开发效率。</p>
+<p>各个分支在开发过程中，如果某一个分支开发失败，不会对其他分支有任何影响。失败的分支删除重新开始即可。</p>
+<h2 id="分支的操作"><a href="#分支的操作" class="headerlink" title="分支的操作"></a>分支的操作</h2><table>
+<thead>
+<tr>
+<th align="left">命令名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">git branch 分支名</td>
+<td>创建分支</td>
+</tr>
+<tr>
+<td align="left">git branch -v</td>
+<td>查看分支</td>
+</tr>
+<tr>
+<td align="left">git checkout&#x2F;switch 分支名</td>
+<td>切换分支</td>
+</tr>
+<tr>
+<td align="left">git merge 分支名</td>
+<td>把指定的分支合并到当前分支上</td>
+</tr>
+</tbody></table>
+<h3 id="查看分支"><a href="#查看分支" class="headerlink" title="查看分支"></a>查看分支</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/01/Git-note/branch1.png"></p>
+<h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch 分支名</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/01/Git-note/branch2.png"></p>
+<p>此时刚创建的分支会将主分支master的内容复制一份</p>
+<h3 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout/switch 分支名</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/01/Git-note/branch3.png"></p>
+<p>之后的操作与一般流程相同(不用再初始化本地库)。</p>
+<p><img src="/2023/01/01/Git-note/branch4.png"></p>
+<p>切换分支的本质仍是HEAD指针的指向不同。</p>
+<h3 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge 分支名</span><br></pre></td></tr></table></figure>
+
+<p>需要切换回master分支，将hot-fix分支合并到主分支。</p>
+<p><img src="/2023/01/01/Git-note/branch5.png"></p>
+<p>此时工作区的文件内容会变成hot-fix分支下对应的文件内容。</p>
+<h3 id="产生冲突"><a href="#产生冲突" class="headerlink" title="产生冲突"></a>产生冲突</h3><p>合并分支时，<strong>两个分支</strong>在<strong>同一个文件</strong>的<strong>同一个位置</strong>有两套完全不同的需改。Git无法替我们决定使用哪一个。必须<strong>人为决定</strong>新代码内容。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Git笔记</p><p><a href="https://maoshandunkey.top/2023/01/01/Git-note/">https://maoshandunkey.top/2023/01/01/Git-note/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Maoshan Dunkey</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-01-01</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-01-01</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/Git/">Git</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2023/01/03/fpga-1/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">FPGA实现sobel变换</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/12/29/Hexo-install-deploy/"><span class="level-item">Hexo的安装和部署</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client@2.6.3/dist/waline.css"><script src="https://cdn.jsdelivr.net/npm/@waline/client@2.6.3/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comment.maoshandunkey.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            locale: {"placeholder":"You can comment without logging in ..."},
+            emoji: ["//unpkg.com/@waline/emojis@1.0.1/weibo"],
+            dark: "auto",
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#版本控制"><span class="level-left"><span class="level-item">版本控制</span></span></a></li><li><a class="level is-mobile" href="#基本的Linux命令"><span class="level-left"><span class="level-item">基本的Linux命令</span></span></a></li><li><a class="level is-mobile" href="#Git工作机制"><span class="level-left"><span class="level-item">Git工作机制</span></span></a></li><li><a class="level is-mobile" href="#Git常用命令"><span class="level-left"><span class="level-item">Git常用命令</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#设置用户名与邮箱-用户标识"><span class="level-left"><span class="level-item">设置用户名与邮箱(用户标识)</span></span></a></li><li><a class="level is-mobile" href="#一般流程"><span class="level-left"><span class="level-item">一般流程</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Git分支"><span class="level-left"><span class="level-item">Git分支</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#什么是分支"><span class="level-left"><span class="level-item">什么是分支</span></span></a></li><li><a class="level is-mobile" href="#分支的好处"><span class="level-left"><span class="level-item">分支的好处</span></span></a></li><li><a class="level is-mobile" href="#分支的操作"><span class="level-left"><span class="level-item">分支的操作</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#查看分支"><span class="level-left"><span class="level-item">查看分支</span></span></a></li><li><a class="level is-mobile" href="#创建分支"><span class="level-left"><span class="level-item">创建分支</span></span></a></li><li><a class="level is-mobile" href="#切换分支"><span class="level-left"><span class="level-item">切换分支</span></span></a></li><li><a class="level is-mobile" href="#合并分支"><span class="level-left"><span class="level-item">合并分支</span></span></a></li><li><a class="level is-mobile" href="#产生冲突"><span class="level-left"><span class="level-item">产生冲突</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/FPGA/"><span class="tag">FPGA</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Git/"><span class="tag">Git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"><span class="tag">博客搭建</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%B7%E7%A7%AF/"><span class="tag">卷积</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AC%94%E8%AE%B0/"><span class="tag">笔记</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/1.png" alt="Blog - Maoshan Dunkey" height="28"></a><p class="is-size-7"><span>&copy; 2023 Maoshan Dunkey</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
