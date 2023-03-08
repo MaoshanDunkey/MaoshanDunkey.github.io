@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- 由 Microsoft Visio, SVG Export 生成 indirect-learning.svg 页-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="5.19731in" height="2.55191in"
+		viewBox="0 0 374.206 183.738" xml:space="preserve" color-interpolation-filters="sRGB" class="st11">
+	<v:documentProperties v:langID="2052" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {marker-end:url(#mrkr4-6);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st2 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.28409090909091}
+		.st3 {fill:none;stroke:none;stroke-width:0.25}
+		.st4 {fill:#ffffff;stroke:#000000;stroke-width:0.75}
+		.st5 {fill:#000000;font-family:黑体;font-size:1.00001em}
+		.st6 {fill:#000000;font-family:Calibri;font-size:1.00001em}
+		.st7 {fill:#000000;font-family:Calibri;font-size:1.5em}
+		.st8 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st9 {stroke:#000000;stroke-dasharray:7,5;stroke-linecap:round;stroke-linejoin:round;stroke-width:1}
+		.st10 {marker-end:url(#mrkr2-67);stroke:#000000;stroke-dasharray:7,5;stroke-width:1}
+		.st11 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Markers">
+		<g id="lend4">
+			<path d="M 2 1 L 0 0 L 2 -1 L 2 1 " style="stroke:none"/>
+		</g>
+		<marker id="mrkr4-6" class="st2" v:arrowType="4" v:arrowSize="2" v:setback="7.04" refX="-7.04" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend4" transform="scale(-3.52,-3.52) "/>
+		</marker>
+		<g id="lend2">
+			<path d="M 1 1 L 0 0 L 1 -1 L 1 1 " style="stroke:none"/>
+		</g>
+		<marker id="mrkr2-67" class="st2" v:arrowType="2" v:arrowSize="2" v:setback="3.52" refX="-3.52" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend2" transform="scale(-3.52,-3.52) "/>
+		</marker>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>页-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<v:layer v:name="连接线" v:index="0"/>
+		<g id="shape101-1" v:mID="101" v:groupContext="shape" v:layerMember="0" transform="translate(7.87096,-127.453)">
+			<title>箭头.101</title>
+			<path d="M0 176.65 L57.33 176.65" class="st1"/>
+		</g>
+		<g id="shape102-7" v:mID="102" v:groupContext="shape" transform="translate(26.008,-143.497)">
+			<title>工作表.102</title>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="24.9732" height="15.9874" class="st3"/>
+			<switch>
+				<foreignObject x="0" y="167.75" width="24.9732" height="15.9874"
+						requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+					<v:foreignData v:dataType="ole" v:type="33280" v:orgSize="4096" v:data="data:metafile;base64,eNrtVk9PE0EUf7P
+								bLVCKbREJkkZXjQpECzEkxAthaRch2trQJh5rqSusabf/lZ40mmjipfIR/Ahy0sSDiQkxwSCJMXrwgAfPqNmb2vpmdpaQqkl
+								LuBB427fzZmbnvXnvze9N19/5Np4+6/8CDTQOItTqHeDcNkY4M/ICCLxfq9fr9nD9gPYU/UaWeA4d2Dq5XDsIzb6gWcjiUwI
+								ZVDCwLUAFWqFekLYwT+uBuCaw8VfW9NS/1ojIE5JdU65CGjTYKblAINv9aXZdz1ZNC6L/GcjhPubgVsv2u9E+4T41a59+r3N
+								Z4P5HMfIaFGGEPc1TH/ff0YJ9utdu0ZJrPG82/iVeA9qQ25E7WIwBOpHdyF3Ih5A9fI2PxQDgMI/pQd3YW0Ssa3zHRDDjoss
+								6e43Y78VXOFlaiFdymjwWGJHVfDlZ0rMGO0lbM+oUO032ZCAUC8dHwby4nG/CPrOLrYPjyq5DlPI4MYqddYHO4UkWF5i7S2y
+								WnnQLu1QiAgUPlQLkKB/rFOzv3AIIskgxcMbpwd3bewfEbTcf7ef489IIoLSCvIEaVoilo4NqE6jUI1wnQPwo/RTu1ay9PiG
+								8HHjjekYryhHtjjybzSQNhqjpVb/4WX5TnuCenicWKi+4rEUAA4NRAqKt/Qo0aictaSes/faXlUVjHK0scY/7iJLLFcNTwSC
+								B7zhGOaQV9XlDjqV0zUhp5+QZIxUAiUCbg6Z1DAvFNd1Q0unJZFFPBbM3tGhyXiuCT2rcmE+MVTJz2TROBbPlgq4V6CT4HOG
+								4rC6WCklb0zYlztW1t18xIe0nhtVqaFiJml7PpYQS/XH8GMpHPAqYqnnarE4mUPJ6grSpquZQYtqsspEJbO9Oo6AMJUIJ1aQ
+								/xePGbOEBQcIgEAyOCDRAErgIDjxYxNf9ASoZVBrkFZNGyAUcY0hWRryssgK8pOF8iEpPxirFkpaBzffwWKQrA2dvblKm/YE
+								PftHOt5URAuJ/kBBRIjOt41eFPJQhiTe/jveggf8DIrx3u6lbWUaXW71/KUK6COwa7eT+303ay/b9DNkvXlPsXn70EX598ot
+								uiEnx58un9h1s9yH9ASDB17M="/>
+				</foreignObject>
+				<svg viewBox="0 0 702.56 449.53" enable-background="new" color-interpolation-filters="sRGB" height="15.9874"
+						preserveAspectRatio="none" width="24.9732" x="0" y="167.75">
+					<defs>
+						<clipPath id="mfid22">
+							<rect id="mfid23" x="0" y="0" width="702.56" height="449.53"/>
+						</clipPath>
+					</defs>
+					<g clip-path="url(#mfid22)">
+						<mask id="mfid21" fill-rule="evenodd">
+							<g>
+								<rect width="703" height="450" fill="white" stroke="none"/>
+							</g>
+						</mask>
+						<g mask="url(#mfid21)">
+							<g transform="matrix(0.87875, 0, 0, 0.87891, 0, 0)">
+								<g stroke="#000000" stroke-miterlimit="10" fill="none">
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="normal" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,336,1104" y="0" transform="translate(256,352)"
+												xml:space="preserve">()</text>
+									</g>
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="italic" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,318,1086" y="0" transform="translate(76,352)"
+												xml:space="preserve">xn</text>
+									</g>
+								</g>
+							</g>
+						</g>
+						<mask id="mfid24" fill-rule="evenodd" fill="white" stroke="none">
+							<rect x="0" y="0" width="703" height="450"/>
+						</mask>
+					</g>
+				</svg>
+			</switch>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="24.9732" height="15.9874" class="st3"/>
+		</g>
+		<g id="shape103-10" v:mID="103" v:groupContext="shape" transform="translate(224.929,-113.081)">
+			<title>圆角矩形.103</title>
+			<desc>功率放大器</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="46.063" cy="160.536" width="92.13" height="46.403"/>
+			<rect x="0" y="137.335" width="92.126" height="46.403" rx="14.1732" ry="14.1732" class="st4"/>
+			<text x="16.06" y="164.53" class="st5" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>功率放大器</text>		</g>
+		<g id="shape107-13" v:mID="107" v:groupContext="shape" transform="translate(181.165,-142.316)">
+			<title>工作表.107</title>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="23.9811" height="15.9874" class="st3"/>
+			<switch>
+				<foreignObject x="0" y="167.75" width="23.9811" height="15.9874"
+						requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+					<v:foreignData v:dataType="ole" v:type="33280" v:orgSize="4096" v:data="data:metafile;base64,eNrtVk9PE0EUf7P
+								bLVCKbREJkkZXjQaIFkJIiBfD0i5CtLWhTTzWpa6wpt2W/lHLRaOJJl4qH8GPICdNPJBoiAkESYzRgwc9eFezN7X1zewsIaB
+								JS7wQeNu38+bNznvz3szvTTfeBj4/fdb7BbbRBRChVm8D9xYd4czIDyDwfq1erzvq+gHtKfqNLPE9dGHr5nLtIDX7gqYhh08
+								JZFDBxLYAFWiGukHaxDytB+K6wPTL9vDE3+aIyGOSU1OuQAZ02C15QCBb42l0XtdmTQtj/FnI4zpm4GbT/jvRP+ExNeqffm9
+								wWeDxxzHzOhRhiD2NUw+P39WEf7rWTtGWa3zfHPxLvAa0ILcit7EcA7Qje5E7kA8h+/icAMsBwGGe04O6sbeI2Nf4rongjos
+								e++xtx343vqJaaS5ZyevyaGhIVufLWsnImewkbY6oE+w0OYOhSCKaHAHr/NJ8A/6ZX2xdHFdOHaIUw4ER7GwIdAxPsjjHwl1
+								ko/Sk29ilEhEoeKgUIke5rl1wvvMKOE2kGDjj9uHqnbUD4raTa3s5/vw0AyitIC+jhRVi22ij1gQqdQnXiAVBlH4K92r2Wp8
+								QXg78SSOrF+WYfluezmU1kyFqcjUofpLflMd4pOeIjcphjz0JoK8/TkB0rF/eYZ00ZZ2w9tsOLwvmMHpZ5BH3ECWfL0YnwmE
+								C31FHOaIXjVlTTqQN3UzrZ+UpMx0CiUCLi27rKBaKq4apZDLjWtFIh3PX9bg2qxchIG1fWEBMVLIzuQwOhXPlgqEX6CAEXNG
+								krN4pFTTH0hYj7tX1ta+4Ia0nBtVqZFCJW37fxZQS/3H8GMpHfApYqnXaqo6nUPL7wrSpqtZAatKqMs0YtncnUVAGUpGUatG
+								f4vMSPD5EQMIkEEyOCDRBEngIKh4s4Ot+H5VMKvXzikkz5AGOMSR7R/yssgK8pOl8iEZPJirFkp6FtXfwWKQzX/turFGm/b7
+								3QdHZb3tHCIj/QEJMiU01j18V5qEMGt78Bt6DJv4PiPHerYZuZRlDbvb+pQjpIPDfaDf3//+kvew/yJD94hXF7qVHH+DXx6D
+								ohYSUfL50at/Bdh/SHwY32NA="/>
+				</foreignObject>
+				<svg viewBox="0 0 702.56 468.13" enable-background="new" color-interpolation-filters="sRGB" height="15.9874"
+						preserveAspectRatio="none" width="23.9811" x="0" y="167.75">
+					<defs>
+						<clipPath id="mfid26">
+							<rect id="mfid27" x="0" y="0" width="702.56" height="468.13"/>
+						</clipPath>
+					</defs>
+					<g clip-path="url(#mfid26)">
+						<mask id="mfid25" fill-rule="evenodd">
+							<g>
+								<rect width="703" height="468" fill="white" stroke="none"/>
+							</g>
+						</mask>
+						<g mask="url(#mfid25)">
+							<g transform="matrix(0.91536, 0, 0, 0.91406, 0, 0)">
+								<g stroke="#000000" stroke-miterlimit="10" fill="none">
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="normal" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,336,1104" y="0" transform="translate(244,352)"
+												xml:space="preserve">()</text>
+									</g>
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="italic" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,306,1074" y="0" transform="translate(76,352)"
+												xml:space="preserve">zn</text>
+									</g>
+								</g>
+							</g>
+						</g>
+						<mask id="mfid28" fill-rule="evenodd" fill="white" stroke="none">
+							<rect x="0" y="0" width="703" height="468"/>
+						</mask>
+					</g>
+				</svg>
+			</switch>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="23.9811" height="15.9874" class="st3"/>
+		</g>
+		<g id="shape110-16" v:mID="110" v:groupContext="shape" v:layerMember="0" transform="translate(317.055,-128.303)">
+			<title>箭头.110</title>
+			<path d="M0 176.65 L42.24 176.65" class="st1"/>
+		</g>
+		<g id="shape111-21" v:mID="111" v:groupContext="shape" transform="translate(330.902,-143.497)">
+			<title>工作表.111</title>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="24.9732" height="15.9874" class="st3"/>
+			<switch>
+				<foreignObject x="0" y="167.75" width="24.9732" height="15.9874"
+						requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+					<v:foreignData v:dataType="ole" v:type="33280" v:orgSize="4096" v:data="data:metafile;base64,eNrtVl9rE0EQn73
+								NpW2amqTWUkvQU1HaommRQhFBek2utkhiaAK+GdN4tifJ5b+aJ0VBwZdY8Av4EeyTgg8FoQgttSAigg/tg+8q96Ymzt7tlRI
+								VktKX0s5lbmdnb2d2Zvc3m/X3vo0XL/s3oYEuAYVavQOc23SEs0leAIH3a/V63VbXD2hP0W9kke+hA1snl2sHqdkXNANZfEo
+								ggQI6tgWoQCvUC+IW5lk9oGuCqV+yhif/NYcij4t2TbkKaVBhp+QCgWyPp9l5PVs1LYjxZyCH65iF2y3770b/hMfUrH/2vcZ
+								lgccfxcyrUIQR82me+nj8jhb8s7V2U0uu8X2z8S/yGtCG3I7cYeYYoBPZjdyFfAjZw+f4zBwAHOY5Pagbe4uIdY3vmAjuOHV
+								ZZ68R+734CidL8/FKTpXGAiOSki8nS1pWN0/S1ogyaZ4mezAQioXjo2BcWMw34d/0i62D48quQ4zyODCKnXWBjeFJpvNmuAv
+								mKDvpFnaZRAQGHiYFyFGu6xTs79wCCBJlGDjj9ODq7bUD4raba/s5/rwsAygtI2+ghWVi2ehg1gQm9Qg3SB/xo/RTeFCz1vq
+								M8HLgjWsZtShF1LvSTDaT1E1Ebaz46RfpXXmcR3qOWKg877ImAQwMRglQ2/p1aLROWrJOzPbbX14qegi9LPCI+4icyxXDk8E
+								gge+oYxxSi9qcLsVSmqqn1LPStJ4KgEigzcG2dQwLxTVNl9PpiWRRSwWzN9Vock4tgk9sXJiPxiqZ2Wwah4LZckFTC2wQfI5
+								wXFLulQpJ29I2I86VtdWvuCHtJ4aVamhYjhpez+WEHP1x/BjKRzwyGIpx2qhOJFDyeoKsqSrGUGLKqJqacWzvT6EgDyVCCcV
+								gP9njJnh8iICESSCYHAosQSK4CCoeVfD1cIBJOpMGecVkGXIBxxiStSNes7ICvGHpfIxGT8YqxZKagdUP8JSymReHbq0yZv2
+								lj35q77e1IwTof5AQkSPTreNXgTyUIYk3v4b3oI7/AyK8d6epW1nCkFu9fxlCugjsGu3k/t9N2sv+/SayX79l2L3y5BM8/+y
+								nboiJv14tntp3sN2H9Ad97tmm"/>
+				</foreignObject>
+				<svg viewBox="0 0 702.56 449.53" enable-background="new" color-interpolation-filters="sRGB" height="15.9874"
+						preserveAspectRatio="none" width="24.9732" x="0" y="167.75">
+					<defs>
+						<clipPath id="mfid30">
+							<rect id="mfid31" x="0" y="0" width="702.56" height="449.53"/>
+						</clipPath>
+					</defs>
+					<g clip-path="url(#mfid30)">
+						<mask id="mfid29" fill-rule="evenodd">
+							<g>
+								<rect width="703" height="450" fill="white" stroke="none"/>
+							</g>
+						</mask>
+						<g mask="url(#mfid29)">
+							<g transform="matrix(0.87875, 0, 0, 0.87891, 0, 0)">
+								<g stroke="#000000" stroke-miterlimit="10" fill="none">
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="normal" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,336,1104" y="0" transform="translate(280,352)"
+												xml:space="preserve">()</text>
+									</g>
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="italic" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,324,1092" y="0" transform="translate(94,352)"
+												xml:space="preserve">yn</text>
+									</g>
+								</g>
+							</g>
+						</g>
+						<mask id="mfid32" fill-rule="evenodd" fill="white" stroke="none">
+							<rect x="0" y="0" width="703" height="450"/>
+						</mask>
+					</g>
+				</svg>
+			</switch>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="24.9732" height="15.9874" class="st3"/>
+		</g>
+		<g id="shape113-24" v:mID="113" v:groupContext="shape" v:layerMember="0" transform="translate(339.973,-135.39)">
+			<title>箭头.113</title>
+			<path d="M0 183.74 L0 271.09 L-21.82 271.09" class="st1"/>
+		</g>
+		<g id="shape114-29" v:mID="114" v:groupContext="shape" transform="translate(182.891,-79.8306)">
+			<title>圆形</title>
+			<desc>+</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="8.7874" cy="174.95" width="17.58" height="17.5748"/>
+			<ellipse cx="8.7874" cy="174.95" rx="8.7874" ry="8.7874" class="st4"/>
+			<text x="5.8" y="178.55" class="st6" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>+</text>		</g>
+		<g id="shape115-32" v:mID="115" v:groupContext="shape" v:layerMember="0" transform="translate(184.918,-134.976)">
+			<title>箭头.115</title>
+			<path d="M7.09 183.74 L7.09 214.27" class="st1"/>
+		</g>
+		<g id="shape116-37" v:mID="116" v:groupContext="shape" v:layerMember="0" transform="translate(218.991,-48.0399)">
+			<title>箭头.116</title>
+			<path d="M0 183.74 L-27.17 183.74 L-27.17 158.99" class="st1"/>
+		</g>
+		<g id="shape118-42" v:mID="118" v:groupContext="shape" v:layerMember="0" transform="translate(164.367,-127.89)">
+			<title>箭头.118</title>
+			<path d="M0 176.65 L53.52 176.65" class="st1"/>
+		</g>
+		<g id="shape119-47" v:mID="119" v:groupContext="shape" transform="translate(161.32,-48.1674)">
+			<title>工作表.119</title>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="23.9811" height="15.9874" class="st3"/>
+			<switch>
+				<foreignObject x="0" y="167.75" width="23.9811" height="15.9874"
+						requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+					<v:foreignData v:dataType="ole" v:type="33280" v:orgSize="4096" v:data="data:metafile;base64,eNrtFk1rE1Fw3m6
+								SNmk0SW1LLUFXRWmLpqUUqhfpNtnaoomhCXiM27jWlWST5kNNLxYLKl4i9OrFn2BPCh4KQhEqVRDRgwc9eBdZT2rivN23bYg
+								KSe0ltJPMvnlv9s28+dz35rXv0+MnfZ+hDs4CD5WqExw1a4ShAV4Ajs0r1WrVWq7uQUvBL0QHi6ENRzujK3uu2RUwAxn8FUA
+								ACTQcc1CCZqAHM8aSRfsBv8EZ66sme/Jve3jERbvVUy5CChTYLriAI7X2NLqva7OnBdH+NGTxHLNwvWn9naifMJsa1U/fVxn
+								NMfuj6HkF8jBs/BqHXma/rQn99KwLvElXWNxq65/2gzbEdkSn4WOADkQ34j7E/Yge8xNg7OvE8QDzaTdb24PWAGJ+xrcNBKP
+								Nu8zcq6/9HnyE5cK1eCmrCGOBYUGaL8oFNaMZmbTJkSaNbLKYgVAsHB8F/czKfAP6Db042lhdWX2IQgQZozg5zVMeZjL/yDB
+								32eDSTDdrl1KEo8VDqQA5yNY6OOs9N4fbeFoDJxwePL11dsC67WSrfaz+aFWsIrWGuIoS1ogpw0mlcZTq4uJkDvxI/eAWK+Z
+								ZHxLWDrxxNa3khYhyU5jJpGXNqKapdT//UXhZHGeWniJmZY64rH5yH60zZV8m+n/KJsb4lZiVb+qgh+8fiJItLRf+0EKatMD
+								UQuq0LGgjqGWZedVPxGw2H54MBgl8xzWKISWvzmlCLKkqWlI5KUxryQDYCbTZaOqMYTO6pGpiKjUh59VkMHNFicpzSh589vq
+								D+fhYKT2bSSErmCnmVCVHmeCzheOCdKuQky1JNUIc6xuvvmDQ248MSeXQkBjVvZ5zCTH67fAhpLs9IuiSflwvTySQ8nqCdCh
+								L+mBiSi8bK+M43p5CQhxMhBKSTv+ix00wjIRDQCcQdAoPNAx2cBHM0qUFbMpO5Nzpx8eSRqkB1pmpl1zAahnBjIrX6OAAz6l
+								L76Lgo7FSvqCkIfkWHvB0Z6z3apIinfe/8/P1sef/UXERMTK9NfMbUXv2gsbl/L338PODn3dDzB5/unJsV4akxUCCeSiCjDc
+								/Fe9BGt4DI2x2o6FbmYB2N3v/8lEkO2fDdu5/OwmtrP83TXrmdA=="/>
+				</foreignObject>
+				<svg viewBox="0 0 702.56 468.13" enable-background="new" color-interpolation-filters="sRGB" height="15.9874"
+						preserveAspectRatio="none" width="23.9811" x="0" y="167.75">
+					<defs>
+						<clipPath id="mfid34">
+							<rect id="mfid35" x="0" y="0" width="702.56" height="468.13"/>
+						</clipPath>
+					</defs>
+					<g clip-path="url(#mfid34)">
+						<mask id="mfid33" fill-rule="evenodd">
+							<g>
+								<rect width="703" height="468" fill="white" stroke="none"/>
+							</g>
+						</mask>
+						<g mask="url(#mfid33)">
+							<g transform="matrix(0.91536, 0, 0, 0.91406, 0, 0)">
+								<g stroke="#000000" stroke-miterlimit="10" fill="none">
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="normal" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,768" y="0" transform="translate(103,340)"
+												xml:space="preserve">ˆ</text>
+										<text stroke="none" fill="#000000" x="0,336,1104" y="0" transform="translate(244,352)"
+												xml:space="preserve">()</text>
+									</g>
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="italic" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,306,1074" y="0" transform="translate(76,352)"
+												xml:space="preserve">zn</text>
+									</g>
+								</g>
+							</g>
+						</g>
+						<mask id="mfid36" fill-rule="evenodd" fill="white" stroke="none">
+							<rect x="0" y="0" width="703" height="468"/>
+						</mask>
+					</g>
+				</svg>
+			</switch>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="23.9811" height="15.9874" class="st3"/>
+		</g>
+		<g id="shape120-50" v:mID="120" v:groupContext="shape" transform="translate(171.595,-69.6491)">
+			<title>文本框.120</title>
+			<desc>-</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="8.7874" cy="178.942" width="17.58" height="9.59117"/>
+			<rect x="0" y="174.147" width="17.5748" height="9.59117" class="st3"/>
+			<text x="6.03" y="184.34" class="st7" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>-</text>		</g>
+		<g id="shape121-53" v:mID="121" v:groupContext="shape" v:layerMember="0" transform="translate(200.453,-81.0447)">
+			<title>箭头.121</title>
+			<path d="M0 176.65 L77.52 176.65" class="st8"/>
+		</g>
+		<g id="shape122-56" v:mID="122" v:groupContext="shape" transform="translate(221.726,-88.618)">
+			<title>工作表.122</title>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="23.9811" height="15.9874" class="st3"/>
+			<switch>
+				<foreignObject x="0" y="167.75" width="23.9811" height="15.9874"
+						requiredExtensions="http://schemas.microsoft.com/visio/2003/SVGExtensions/">
+					<v:foreignData v:dataType="ole" v:type="33280" v:orgSize="4096" v:data="data:metafile;base64,eNrtVs1rE0EUf7O
+								T7UfamqStpZagq6K0RdMihepFuk22tkhiaAIeYxrXdiXZpPlQc1IUFLzE/gleercnBQ8FoQiVWhDRgwcVvKvsTU18MztbSqu
+								QlF5K+zZv582bnffmvZnfm6y/9X1++qzvC2yhi0ChWmuFpk06IpiTF0AS/WqtVnPUtQPaU/QHWRZ76MK2ScjVg9TsC5qGLD5
+								FUEADE9s8lKER6gF5A/OsHtA1ieuX7eGJf82hyGOyU1OuQBp02Cm5QSKb46l3XvdGTQti/BnI4Tpm4GbD/jvRPxEx1euffW8
+								IWRLxRzHzOhRgmD/1U6+I39WAf7bWTmrLVbFvDv5lUQOakVuQW3mOAdqQ25E7kA8he8QcH88BQJfI6UHd2FtE7Gt8x0Rwx6n
+								bPntbsd+Dr3CyOBcv53RlNDCsaPOlZNHImvwkbYxoE/w0OYOBUCwcHwHrwtJ8Hf65X2xdAldOHWIUwYER7KxLbAxPMp3j4S7
+								wUXbSbewyiUgMPEwKkCNC1yY537VLOI0yDJxu8uDqnbUD4rZTaPsE/rwsAyitIC+jhRVi22hl1iQmdUvXyFfwo/RLule11/q
+								EiHLgjRsZvaBE9NvKdDaTNDmiJlf99JPyujQmIj1LbFSec9uTAPoHogSoY31km3XSkHXC2+/bvOjmefSyICLuJWouVwhPBIM
+								EfqCOcUgvGLOmEksZupnSzyhTZioAMoFmF9vWUSwUVw1TTafHkwUjFcxe16PJWb0APnnrwnw0Vs7MZNM4FMyW8oaeZ4Pgc4X
+								jinanmE86ljYZaVpde/MNN6Tl+JBWCQ2pUcvruZRQoz+PHUX5sEcFS7NOWZXxBEpeT5A1Fc0aTExaFa4Zw/buJArqYCKU0Cz
+								2Uz3tBI8PkZAwCQSTQ4ElSAY3QcUDHV/3+5lkMmlAVEyWITcIjCHZO+LllRXgJUvnQzR6IlYuFPUMLL6Dx5TNHOy6sciY9fv
+								f+6mz3/aOEKD/QUJEjUw1jl8N5qEESbz5DbwHTfwfEBG9W3XdygqG3Oj9yxDSQWDXaCf3/27SXvbv58h+8Yph9/KjD/D7o5/
+								6ISbHny+d3Hew3Yf0FyMp1t8="/>
+				</foreignObject>
+				<svg viewBox="0 0 702.56 468.13" enable-background="new" color-interpolation-filters="sRGB" height="15.9874"
+						preserveAspectRatio="none" width="23.9811" x="0" y="167.75">
+					<defs>
+						<clipPath id="mfid38">
+							<rect id="mfid39" x="0" y="0" width="702.56" height="468.13"/>
+						</clipPath>
+					</defs>
+					<g clip-path="url(#mfid38)">
+						<mask id="mfid37" fill-rule="evenodd">
+							<g>
+								<rect width="703" height="468" fill="white" stroke="none"/>
+							</g>
+						</mask>
+						<g mask="url(#mfid37)">
+							<g transform="matrix(0.91536, 0, 0, 0.91406, 0, 0)">
+								<g stroke="#000000" stroke-miterlimit="10" fill="none">
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="normal" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,336,1104" y="0" transform="translate(226,352)"
+												xml:space="preserve">()</text>
+									</g>
+									<g font-family="&#39;Times New Roman&#39;,roman,serif" font-style="italic" font-weight="400"
+											font-size="384">
+										<text stroke="none" fill="#000000" x="0,312,1080" y="0" transform="translate(52,352)"
+												xml:space="preserve">en</text>
+									</g>
+								</g>
+							</g>
+						</g>
+						<mask id="mfid40" fill-rule="evenodd" fill="white" stroke="none">
+							<rect x="0" y="0" width="703" height="468"/>
+						</mask>
+					</g>
+				</svg>
+			</switch>
+			<rect v:rectContext="foreign" x="0" y="167.75" width="23.9811" height="15.9874" class="st3"/>
+		</g>
+		<g id="shape123-59" v:mID="123" v:groupContext="shape" transform="translate(445.343,171.421) rotate(114.37)">
+			<title>工作表.123</title>
+			<path d="M0 183.74 L95 183.74" class="st9"/>
+		</g>
+		<g id="shape125-62" v:mID="125" v:groupContext="shape" transform="translate(92.2253,-4.97803)">
+			<title>工作表.125</title>
+			<path d="M148.08 183.74 L0 183.74 L0 85.92 L45.48 12.94" class="st10"/>
+		</g>
+		<g id="shape100-68" v:mID="100" v:groupContext="shape" transform="translate(72.241,-113.081)">
+			<title>圆角矩形</title>
+			<desc>预失真器</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="46.063" cy="160.536" width="92.13" height="46.403"/>
+			<rect x="0" y="137.335" width="92.126" height="46.403" rx="14.1732" ry="14.1732" class="st4"/>
+			<text x="22.06" y="164.53" class="st5" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>预失真器</text>		</g>
+		<g id="shape112-71" v:mID="112" v:groupContext="shape" transform="translate(218.991,-24.8384)">
+			<title>圆角矩形.112</title>
+			<desc>预失真训练器</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="46.063" cy="160.536" width="92.13" height="46.403"/>
+			<rect x="0" y="137.335" width="92.126" height="46.403" rx="14.1732" ry="14.1732" class="st4"/>
+			<text x="10.06" y="164.53" class="st5" v:langID="2052"><v:paragraph v:horizAlign="1"/><v:tabList/>预失真训练器</text>		</g>
+	</g>
+</svg>

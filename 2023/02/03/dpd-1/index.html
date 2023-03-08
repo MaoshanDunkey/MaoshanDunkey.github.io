@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="​ 由于信号在传输过程中存在衰减现象，因此在发射过程中需要加入功率放大器(Power Amplifier)。这是通信系统（图1为最基本的通信系统结构）中不可缺少的重要器件，其固有的非线性特性会导致信号失真与邻道干扰。一方面，功率放大器要工作在线性区以保证对信号的正确放大；另一方面，功率放大器回退工作致使其效率大大降低。为了使功率放大器效率提高，必须让功率放大器进入失真的非线性区域工作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字预失真-最小二乘法">
+<meta property="og:url" content="http://example.com/2023/02/03/dpd-1/index.html">
+<meta property="og:site_name" content="Blog - Maoshan Dunkey">
+<meta property="og:description" content="​ 由于信号在传输过程中存在衰减现象，因此在发射过程中需要加入功率放大器(Power Amplifier)。这是通信系统（图1为最基本的通信系统结构）中不可缺少的重要器件，其固有的非线性特性会导致信号失真与邻道干扰。一方面，功率放大器要工作在线性区以保证对信号的正确放大；另一方面，功率放大器回退工作致使其效率大大降低。为了使功率放大器效率提高，必须让功率放大器进入失真的非线性区域工作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/communication_structure.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/DPD_principle.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/indirect-learning.svg">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/circuit.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/signal.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/dpd.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/PA.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/train.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K1-Q2.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K3-Q2.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K5-Q2.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K7-Q2.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K9-Q2.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K5-Q0.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K5-Q1.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K5-Q2.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K5-Q3.png">
+<meta property="og:image" content="http://example.com/2023/02/03/dpd-1/K5-Q4.png">
+<meta property="article:published_time" content="2023-02-03T07:12:12.000Z">
+<meta property="article:modified_time" content="2023-03-08T09:02:59.372Z">
+<meta property="article:author" content="Maoshan Dunkey">
+<meta property="article:tag" content="DPD">
+<meta property="article:tag" content="Matlab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/02/03/dpd-1/communication_structure.png">
+
+
+<link rel="canonical" href="http://example.com/2023/02/03/dpd-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/02/03/dpd-1/","path":"2023/02/03/dpd-1/","title":"数字预失真-最小二乘法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数字预失真-最小二乘法 | Blog - Maoshan Dunkey</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog - Maoshan Dunkey</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E9%A2%84%E5%A4%B1%E7%9C%9F"><span class="nav-number">1.</span> <span class="nav-text">数字预失真</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E7%8E%87%E6%94%BE%E5%A4%A7%E5%99%A8%E7%9A%84%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">功率放大器的数学模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%A4%B1%E7%9C%9F%E5%99%A8%E7%9A%84%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">预失真器的数学模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matlab%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">Matlab仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B0%84%E9%93%BE%E8%B7%AF%E6%90%AD%E5%BB%BA"><span class="nav-number">2.1.</span> <span class="nav-text">发射链路搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%BA%90%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.1.</span> <span class="nav-text">信源模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E5%A4%B1%E7%9C%9F%E5%99%A8%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.2.</span> <span class="nav-text">预失真器模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BE%E5%A4%A7%E5%99%A8%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.3.</span> <span class="nav-text">放大器模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E5%99%A8%E6%A8%A1%E5%9D%97"><span class="nav-number">2.1.4.</span> <span class="nav-text">训练器模块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99"><span class="nav-number">2.2.</span> <span class="nav-text">代码编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BF%E7%9C%9F%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">2.3.</span> <span class="nav-text">仿真性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E9%98%B6%E6%95%B0"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">最佳阶数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E8%AE%B0%E5%BF%86%E6%B7%B1%E5%BA%A6"><span class="nav-number">2.3.0.2.</span> <span class="nav-text">最佳记忆深度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">2.3.0.3.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">3.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Maoshan Dunkey"
+      src="/images/my-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Maoshan Dunkey</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/03/dpd-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my-avatar.jpg">
+      <meta itemprop="name" content="Maoshan Dunkey">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog - Maoshan Dunkey">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数字预失真-最小二乘法 | Blog - Maoshan Dunkey">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数字预失真-最小二乘法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-03 15:12:12" itemprop="dateCreated datePublished" datetime="2023-02-03T15:12:12+08:00">2023-02-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-03-08 17:02:59" itemprop="dateModified" datetime="2023-03-08T17:02:59+08:00">2023-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>​
+由于信号在传输过程中存在衰减现象，因此在发射过程中需要加入功率放大器(Power
+Amplifier)。这是通信系统（图1为最基本的通信系统结构）中不可缺少的重要器件，其固有的非线性特性会导致信号失真与邻道干扰。一方面，功率放大器要工作在线性区以保证对信号的正确放大；另一方面，功率放大器回退工作致使其效率大大降低。为了使功率放大器效率提高，必须让功率放大器进入失真的非线性区域工作。</p>
+<img src="/2023/02/03/dpd-1/communication_structure.png" class="">
+<center>
+图1 通信系统结构
+</center>
+<span id="more"></span>
+<h2 id="数字预失真">数字预失真</h2>
+<p>​
+数字预失真实现原理在功率放大器前级处理信号以补偿放大器非线性失真的影响，其本质就是对功率放大器建模后求其逆系统，这个逆系统越好，预失真的效果也就越好。实现原理如图2所示。</p>
+<img src="/2023/02/03/dpd-1/DPD_principle.png" class="">
+<center>
+图2 预失真器实现原理图
+</center>
+<p>​ 从图中可以，预失真器位于功率放大器前端，两者进行级联，先将输入信号
+<span
+class="math inline">\(x(n)\)</span>通过预失真器进行非线性预失真得到<span
+class="math inline">\(z(n)\)</span>，再将该信号<span
+class="math inline">\(z(n)\)</span>作为功率放大器的输入经过功率放大器后得到输出信号<span
+class="math inline">\(y(n)\)</span>，这样<span
+class="math inline">\(x(n)\)</span>在经过两次互逆的处理后得到线性化程度较高的信号<span
+class="math inline">\(y(n)\)</span>。</p>
+<h3 id="功率放大器的数学模型">功率放大器的数学模型</h3>
+<p>​
+功率放大器的数学模型有Volterra级数模型、Hammerstein模型、记忆多项式模型等。利用这些模型均可刻画功率放大器的非线性和记忆性。</p>
+<p>​
+由于记忆多项式模型极大地精简了计算量，得到了广泛应用。设功率放大器的输入为<span
+class="math inline">\(z(n)\)</span>，输出为<span
+class="math inline">\(y(n)\)</span>，那么记忆多项式模型的表达式如式(1)所示。</p>
+<p><span class="math display">\[\begin{equation}
+y(n)=\sum_{\substack{k=1\\{k \
+odd}}}^{K}\sum_{q=0}^{Q}b_{kq}z(n-q)|z(n-q)|^{k-1}
+\end{equation}\]</span></p>
+<p>其中，K为放大器的阶数，Q为记忆深度，即表现为放大器的记忆效应。在此实验中，采用Ding
+Lei论文<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>中的<span
+class="math inline">\(b_{kq}\)</span>值(取K=5,Q=2) <span
+class="math display">\[\begin{array}{ccc}
+b_{10}=1.0513+0.0904j &amp;&amp; b_{30}=-0.0542-0.2900j &amp;&amp;
+b_{50}=-0.9657-0.7028j \\
+b_{11}=-0.0680-0.0023j &amp;&amp; b_{31}=0.2234+0.2317j &amp;&amp;
+b_{51}=-0.2451-0.0.3735j \\
+b_{12}=-0.0289-0.0054j &amp;&amp; b_{32}=-0.0621-0.0932j &amp;&amp;
+b_{52}=0.1229+0.1508j \\
+\end{array}
+\nonumber \]</span></p>
+<p>式(1)可以用矩阵的方式进行表示。设<span
+class="math inline">\(u_{kq}(n)=z(n-q)|z(n-q)|^{k-1}\)</span>，则有
+<span class="math display">\[\begin{equation}
+\mathbf{y}=\mathbf{U}\mathbf{b}
+\end{equation}\]</span> 其中 <span class="math display">\[
+\begin{array}{c}
+\mathbf{y}=[y(0),y(1),\dots,y(N-1)]^T \\
+\mathbf{U}=[\mathbf{u_{10}},\mathbf{u_{30}},\dots,\mathbf{u_{K0}},\dots,\mathbf{u_{1Q}},\dots,\mathbf{u_{KQ}}]
+\\
+\mathbf{u}_{kq}=[u_{kq}(0),\dots,u_{kq}(N-1)]^T \\
+\mathbf{b}=[b_{10},b_{30},\dots,b_{K0},\dots,b_{1Q},\dots,b_{KQ}]^T
+\end{array}
+\nonumber
+\]</span> ​ 利用最小二乘法，可得 <span
+class="math display">\[\begin{equation}
+\hat{\mathbf{b}}=(\mathbf{U}^{H}\mathbf{U})^{-1}\mathbf{U}^{H}\mathbf{y}
+\end{equation}\]</span> 其中<span
+class="math inline">\((\cdot)^H\)</span>指共轭转置。</p>
+<h3 id="预失真器的数学模型">预失真器的数学模型</h3>
+<p>设预失真器的输入为<span
+class="math inline">\(x(n)\)</span>，输出为<span
+class="math inline">\(z(n)\)</span>，则预失真器的数学模型与功率放大器类似，如式(4)所示</p>
+<p><span class="math display">\[\begin{equation}
+z(n)=\sum_{\substack{k=1\\{k \ odd}}}^{K}\sum_{q=0}^{Q}
+a_{kq}x(n-q)|x(n-q)|^{k-1}
+\end{equation}\]</span> 与式(2)类似，式(4)同样可以用矩阵表示 <span
+class="math display">\[\begin{equation}
+\mathbf{z}=\mathbf{X}\mathbf{a}
+\end{equation}\]</span> ### 系数求解</p>
+<img src="/2023/02/03/dpd-1/indirect-learning.svg" class="">
+<center>
+图3 间接学习结构
+</center>
+<p>此篇文章采用间接学习结构，通过一个后置预失真训练器求解出预失真器的系数，并传递给前置预失真器作为参数进行工作，其原理如图3所示。</p>
+<p>在图3中，预失真训练器同样采用记忆多项式模型。由于预失真器是功率放大器的逆系统，令训练器的输入为<span
+class="math inline">\(y(n)\)</span>，输出为<span
+class="math inline">\(z(n)\)</span>，<span
+class="math inline">\(z(n)=x(n)\)</span>，即一开始预失真器视为全通系统，利用最小二乘法求解出预失真器的系数<span
+class="math inline">\(\mathbf{a}\)</span>。 <span
+class="math display">\[\begin{equation}
+\mathbf{a}=(\mathbf{y}^{H}\mathbf{y})^{-1}\mathbf{y}^{H}\mathbf{z}
+\end{equation}\]</span> 在求出系数之后，将系数复制给预失真器。</p>
+<h2 id="matlab仿真">Matlab仿真</h2>
+<h3 id="发射链路搭建">发射链路搭建</h3>
+<p>整个发射链路分为信源，预失真器，功率放大器，训练器。在Simulink中，具体链路如图4所示。</p>
+<img src="/2023/02/03/dpd-1/circuit.png" class="">
+<center>
+图4 发射链路结构
+</center>
+<h4 id="信源模块">信源模块</h4>
+<img src="/2023/02/03/dpd-1/signal.png" class="">
+<center>
+图5 信源模块
+</center>
+<h4 id="预失真器模块">预失真器模块</h4>
+<img src="/2023/02/03/dpd-1/dpd.png" class="">
+<center>
+图6 预失真器模块
+</center>
+<h4 id="放大器模块">放大器模块</h4>
+<img src="/2023/02/03/dpd-1/PA.png" class="">
+<center>
+图7 放大器模块
+</center>
+<h4 id="训练器模块">训练器模块</h4>
+<img src="/2023/02/03/dpd-1/train.png" class="">
+<center>
+图8 训练器模块
+</center>
+<h3 id="代码编写">代码编写</h3>
+<p>由于预失真器模块、放大器模块、训练器模块均采用记忆多项式模型，因此代码基本相同。这里就放上训练器模块的代码。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">train1</span><span class="params">(y)</span></span></span><br><span class="line">    <span class="keyword">global</span> Wkq; </span><br><span class="line">    <span class="keyword">global</span> z; </span><br><span class="line">    <span class="keyword">global</span> K;</span><br><span class="line">    <span class="keyword">global</span> Q;</span><br><span class="line">    G=<span class="number">1</span>;</span><br><span class="line">    y=y/G;</span><br><span class="line"><span class="comment">%     Y=zeros(4096,(Q+1)*(floor(K/2)+1));   k odd</span></span><br><span class="line">     Y=<span class="built_in">zeros</span>(<span class="number">4096</span>,(Q+<span class="number">1</span>)*K);  <span class="comment">% k odd and even</span></span><br><span class="line">    index=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">0</span>:Q</span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:K</span><br><span class="line">            Y(:,index)=y(:,<span class="built_in">i</span>+<span class="number">1</span>).*<span class="built_in">abs</span>(y(:,<span class="built_in">i</span>+<span class="number">1</span>).^(<span class="built_in">j</span><span class="number">-1</span>));	<span class="comment">%构造矩阵Y</span></span><br><span class="line">            index=index+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    Wkq=pinv(Y&#x27;*Y)*Y&#x27;*z;</span><br><span class="line">    Wkq=Wkq.&#x27;;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="仿真性能分析">仿真性能分析</h3>
+<p>由于预失真器采用记忆多项式模型，尝试寻找最佳的K，Q。</p>
+<h5 id="最佳阶数">最佳阶数</h5>
+<p>取记忆深度为3，即Q=2，改变K的取值。</p>
+<img src="/2023/02/03/dpd-1/K1-Q2.png" class="">
+<center>
+图9 K=1,Q=2
+</center>
+<img src="/2023/02/03/dpd-1/K3-Q2.png" class="">
+<center>
+图10 K=3,Q=2
+</center>
+<img src="/2023/02/03/dpd-1/K5-Q2.png" class="">
+<center>
+图11 K=5,Q=2
+</center>
+<img src="/2023/02/03/dpd-1/K7-Q2.png" class="">
+<center>
+图12 K=7,Q=2
+</center>
+<img src="/2023/02/03/dpd-1/K9-Q2.png" class="">
+<center>
+图13 K=9,Q=2
+</center>
+<table>
+<caption>
+表1 不同阶数预失真效果性能指标
+</caption>
+<thead>
+<tr>
+<th>
+模型阶数
+</th>
+<th>
+下边带ACPR
+</th>
+<th>
+上边带ACPR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+1
+</td>
+<td>
+-51.15
+</td>
+<td>
+-47.33
+</td>
+</tr>
+<tr>
+<td>
+3
+</td>
+<td>
+-64.03
+</td>
+<td>
+-64.08
+</td>
+</tr>
+<tr>
+<td>
+5
+</td>
+<td>
+-79.80
+</td>
+<td>
+-79.59
+</td>
+</tr>
+<tr>
+<td>
+7
+</td>
+<td>
+-80.59
+</td>
+<td>
+-80.35
+</td>
+</tr>
+<tr>
+<td>
+9
+</td>
+<td>
+-80.89
+</td>
+<td>
+-80.91
+</td>
+</tr>
+</tbody>
+</table>
+<p>从上面对不同阶数的预失真效果测试可知:</p>
+<p>当模型的阶数小于5时，随着阶数的增加，改善效果非常显著。</p>
+<p>当模型阶数大于5时，随着阶数的增加，预失真的性能得到了提高，但效果不明显，几乎可以忽略不计。</p>
+<h5 id="最佳记忆深度">最佳记忆深度</h5>
+<p>因此选取5作为预失真器的非线性阶数，改变预失真器的记忆深度从1-5（Q=0-4），观察性能指标。</p>
+<img src="/2023/02/03/dpd-1/K5-Q0.png" class="">
+<center>
+图14 K=5,Q=0
+</center>
+<img src="/2023/02/03/dpd-1/K5-Q1.png" class="">
+<center>
+图15 K=5,Q=1
+</center>
+<img src="/2023/02/03/dpd-1/K5-Q2.png" class="">
+<center>
+图16 K=5,Q=2
+</center>
+<img src="/2023/02/03/dpd-1/K5-Q3.png" class="">
+<center>
+图17 K=5,Q=3
+</center>
+<img src="/2023/02/03/dpd-1/K5-Q4.png" class="">
+<center>
+图18 K=5,Q=4
+</center>
+<table>
+<caption>
+表2 不同记忆深度预失真效果性能指标
+</caption>
+<thead>
+<tr>
+<th>
+记忆深度
+</th>
+<th>
+下边带ACPR
+</th>
+<th>
+上边带ACPR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+1(Q=0)
+</td>
+<td>
+-56.70
+</td>
+<td>
+-58.69
+</td>
+</tr>
+<tr>
+<td>
+2(Q=1)
+</td>
+<td>
+-67.34
+</td>
+<td>
+-67.34
+</td>
+</tr>
+<tr>
+<td>
+3(Q=2)
+</td>
+<td>
+-79.09
+</td>
+<td>
+-78.78
+</td>
+</tr>
+<tr>
+<td>
+4(Q=3)
+</td>
+<td>
+-79.08
+</td>
+<td>
+-78.94
+</td>
+</tr>
+<tr>
+<td>
+5(Q=4)
+</td>
+<td>
+-79.99
+</td>
+<td>
+-79.45
+</td>
+</tr>
+</tbody>
+</table>
+<p>由表2可知：</p>
+<p>当预失真器的记忆深度小于3时，随着记忆深度的增加，改善效果非常显著。</p>
+<p>当预失真器的记忆深度大于3时，随着记忆深度的增加，性能得到了改善，但效果不太显著，几乎可以忽略不计。</p>
+<h5 id="结论">结论</h5>
+<p>K=5，Q=2是最佳的取值。</p>
+<h2 id="参考文献">参考文献</h2>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Dinglei,"Digital Predistort of Power Amplifiers for
+Wireless Application",School of Electrical and Computer Engineering
+Georgia Institute of Technology,March 2004<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DPD/" rel="tag"># DPD</a>
+              <a href="/tags/Matlab/" rel="tag"># Matlab</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/01/Git-note/" rel="prev" title="Git笔记">
+                  <i class="fa fa-chevron-left"></i> Git笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/02/09/fpga-2/" rel="next" title="FPGA学习-VGA显示">
+                  FPGA学习-VGA显示 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Maoshan Dunkey</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

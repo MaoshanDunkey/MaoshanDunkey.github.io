@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/1.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.15.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="迭代学习控制 原理说明 迭代学习控制(Iterative Learning Control, ILC)是通过迭代修正获得系统的逆的一种技术。ILC不需要建立数字预失真系统的模型，它通过多次迭代学习来识别出功率放大器PA的最优输入信号，也就是我们需要得到的最优的数字预失真信号，将该信号送入PA就能得到期望的线性化的输出信号。   图1 迭代学习控制框图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字预失真-迭代学习控制">
+<meta property="og:url" content="http://example.com/2023/02/20/dpd-2/index.html">
+<meta property="og:site_name" content="Blog - Maoshan Dunkey">
+<meta property="og:description" content="迭代学习控制 原理说明 迭代学习控制(Iterative Learning Control, ILC)是通过迭代修正获得系统的逆的一种技术。ILC不需要建立数字预失真系统的模型，它通过多次迭代学习来识别出功率放大器PA的最优输入信号，也就是我们需要得到的最优的数字预失真信号，将该信号送入PA就能得到期望的线性化的输出信号。   图1 迭代学习控制框图">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/ILC_Structure.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulink_whole_structure.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulink_ILC_structure.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulink_PA_structure.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/verilog_top_model.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/verilog_ILC_model.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/verilog_PA_model.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/verilog_PA_model_U.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/source_spectrum.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/no_dpd.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/no_dpd_am.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulink_spectrum.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulink_am.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulink_result.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulation_result.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulation_spectrum.png">
+<meta property="og:image" content="http://example.com/2023/02/20/dpd-2/simulation_am.png">
+<meta property="article:published_time" content="2023-02-20T07:12:12.000Z">
+<meta property="article:modified_time" content="2023-03-08T10:58:06.412Z">
+<meta property="article:author" content="Maoshan Dunkey">
+<meta property="article:tag" content="DPD">
+<meta property="article:tag" content="Matlab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/02/20/dpd-2/ILC_Structure.png">
+
+
+<link rel="canonical" href="http://example.com/2023/02/20/dpd-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/02/20/dpd-2/","path":"2023/02/20/dpd-2/","title":"数字预失真-迭代学习控制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数字预失真-迭代学习控制 | Blog - Maoshan Dunkey</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Blog - Maoshan Dunkey</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%AD%A6%E4%B9%A0%E6%8E%A7%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">迭代学习控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">原理说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.2.</span> <span class="nav-text">具体实现步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matlab%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">Matlab实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E9%93%BE%E8%B7%AF"><span class="nav-number">2.1.</span> <span class="nav-text">整体链路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ilc%E5%AD%90%E7%B3%BB%E7%BB%9F%E9%93%BE%E8%B7%AF"><span class="nav-number">2.2.</span> <span class="nav-text">ILC子系统链路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pa%E5%AD%90%E7%B3%BB%E7%BB%9F%E9%93%BE%E8%B7%AF"><span class="nav-number">2.3.</span> <span class="nav-text">PA子系统链路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#verilog%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">Verilog实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#top_model"><span class="nav-number">3.1.</span> <span class="nav-text">top_model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ilc_model"><span class="nav-number">3.2.</span> <span class="nav-text">ILC_model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pa_model"><span class="nav-number">3.3.</span> <span class="nav-text">PA_model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pa_model_u"><span class="nav-number">3.4.</span> <span class="nav-text">PA_model_U</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ilc%E4%BB%BF%E7%9C%9F"><span class="nav-number">4.</span> <span class="nav-text">ILC仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ilc%E7%AE%97%E6%B3%95%E9%AA%8C%E8%AF%81"><span class="nav-number">4.1.</span> <span class="nav-text">ILC算法验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simulink%E4%BB%BF%E7%9C%9F"><span class="nav-number">4.2.</span> <span class="nav-text">Simulink仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vivado%E4%BB%BF%E7%9C%9F"><span class="nav-number">4.3.</span> <span class="nav-text">Vivado仿真</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Maoshan Dunkey"
+      src="/images/my-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Maoshan Dunkey</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/20/dpd-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/my-avatar.jpg">
+      <meta itemprop="name" content="Maoshan Dunkey">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog - Maoshan Dunkey">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数字预失真-迭代学习控制 | Blog - Maoshan Dunkey">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数字预失真-迭代学习控制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-20 15:12:12" itemprop="dateCreated datePublished" datetime="2023-02-20T15:12:12+08:00">2023-02-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-03-08 18:58:06" itemprop="dateModified" datetime="2023-03-08T18:58:06+08:00">2023-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="迭代学习控制">迭代学习控制</h2>
+<h3 id="原理说明">原理说明</h3>
+<p>迭代学习控制(Iterative Learning Control,
+ILC)是通过迭代修正获得系统的逆的一种技术。ILC不需要建立数字预失真系统的模型，它通过多次迭代学习来识别出功率放大器PA的最优输入信号，也就是我们需要得到的最优的数字预失真信号，将该信号送入PA就能得到期望的线性化的输出信号。</p>
+<img src="/2023/02/20/dpd-2/ILC_Structure.png" class="">
+<center>
+图1 迭代学习控制框图
+</center>
+<span id="more"></span>
+<p>ILC的结构图如图1所示，对于定义为<span
+class="math inline">\(y(n)=F(x(n))\)</span>的一个系统，我们希望系统的输出为希望信号<span
+class="math inline">\(y_d(n)\)</span>。这个问题就变成了一个最优化求解的问题，即找到一个最优的输入信号<span
+class="math inline">\(x^*(n)\)</span>，输出能够尽可能逼近我们期望的输出信号<span
+class="math inline">\(y_d(n)\)</span>。ILC就是一种用来寻找这种理想信号的技术。</p>
+<p>ILC的工作原理如下<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>：在第<span
+class="math inline">\(k\)</span>次迭代期间，输入<span
+class="math inline">\(x_k(n)\)</span>通过系统F得到输出<span
+class="math inline">\(y_k(n)\)</span>，可以计算实际输出信号<span
+class="math inline">\(y_k(n)\)</span>和期望信号<span
+class="math inline">\(y_d(n)\)</span>之间的误差<span
+class="math inline">\(e(n)\)</span>，然后通过迭代学习算法得到新的输入信号<span
+class="math inline">\(x_{k+1}(n)\)</span>。通过设计保证了学习控制器更新的新的输入信号<span
+class="math inline">\(x_{k+1}(n)\)</span>产生的误差小于当前输入信号<span
+class="math inline">\(x_k(n)\)</span>产生的误差，这样通过迭代运行，就能够达到系统所需的性能。
+<span class="math display">\[\begin{align}
+    e_k(n)=y_d(n)-y_k(n) \\
+    \mathbf{X_{k+1}}=\mathbf{X_k}+\Phi{\mathbf{(E_k)}}
+\end{align}\]</span></p>
+<p>其中<span
+class="math inline">\(\mathbf{X_k}=[x_k(0),x_k(1),...,x_k(N-1)]\)</span>，<span
+class="math inline">\(\mathbf{E_k}=[e_k(0),e_k(1),...,e_k(N-1)]\)</span>，<span
+class="math inline">\(\Phi\)</span>表示学习学习矩阵，它可以用来控制算法收敛的速度。</p>
+<p>这里采用简单的线性ILC算法，即<span
+class="math inline">\(\mathbf{X_{k+1}}=\mathbf{X_k}+\lambda
+\mathbf{E_k}\)</span>，并令<span
+class="math inline">\(\lambda=1\)</span>，得到本文的迭代方程如式(3)所示。
+<span class="math display">\[\begin{equation}
+    \mathbf{X_{k+1}}=\mathbf{X_k}+\mathbf{E_k}
+\end{equation}\]</span></p>
+<h3 id="具体实现步骤">具体实现步骤</h3>
+<p>下面具体展示针对数字预失真技术的ILC实现步骤。</p>
+<ol type="1">
+<li><p>选择功率放大器PA的期望输出<span
+class="math inline">\(y_d(n)\)</span></p></li>
+<li><p>令<span class="math inline">\(k=1\)</span>，输入信号<span
+class="math inline">\(x_1(n)=y_d/g_{avg}\)</span>，</p>
+<p><span class="math inline">\(g_{avg}\)</span>为PA的平均增益</p></li>
+<li><p><span class="math inline">\(x_k(n)\)</span>通过PA得到输出<span
+class="math inline">\(y_k(n)\)</span>，计算误差<span
+class="math inline">\(e_k(n)=y_d(n)-y_k(n)\)</span></p></li>
+<li><p>使用迭代学习算法，更新信号<span
+class="math inline">\(x_{k+1}(n)=x_k(n)+e_k(n)=x_k(n)+y_d(n)-y_k(n)\)</span>，转到步骤3</p></li>
+</ol>
+<p>这里并没有设置收敛条件。实际上可以预先设定好误差的功率门限，当功率功率小于此门限则终止迭代。而迭代学习算法是否收敛需要考虑到输入信号的雅可比矩阵等。在实际matlab仿真中发现算法确实是收敛的，当迭代到第五次时基本收敛。</p>
+<h2 id="matlab实现">Matlab实现</h2>
+<p>Matlab实现的步骤如下。</p>
+<ol type="1">
+<li><p>首次先进行离线的迭代学习控制，计算并保存每次的<span
+class="math inline">\(x_k(n)\)</span> 和<span
+class="math inline">\(y_k(n)\)</span></p></li>
+<li><p>由<span class="math inline">\(x_k\)</span> 和<span
+class="math inline">\(y_k\)</span>可用记忆多项式描述每次迭代时经过的等效PA</p></li>
+<li><p>最小二乘法求出等效PA的系数<span
+class="math inline">\(w_{kq}\)</span></p></li>
+<li><p>Simulink搭建完整的过程</p></li>
+</ol>
+<p>由于迭代学习控制算法需要反复的经过PA系统获得输出信号，再进行误差计算并迭代。而实际工程中不可能每次发射信号时都经历上述的过程，因此需要先进行离线的迭代学习控制。等效PA既可以用记忆多项式描述，也可以用查找表的方式实现。</p>
+<h3 id="整体链路">整体链路</h3>
+<img src="/2023/02/20/dpd-2/simulink_whole_structure.png" class="">
+<center>
+图2 整体链路
+</center>
+<h3 id="ilc子系统链路">ILC子系统链路</h3>
+<img src="/2023/02/20/dpd-2/simulink_ILC_structure.png" class="">
+<center>
+图3 ILC子系统链路
+</center>
+<h3 id="pa子系统链路">PA子系统链路</h3>
+<img src="/2023/02/20/dpd-2/simulink_PA_structure.png" class="">
+<center>
+图4 PA子系统链路
+</center>
+<p>PA子系统的搭建与<a href="/2023/02/03/dpd-1/" title="数字预失真-最小二乘法">最小二乘法</a>那篇文章相同。采用K=5，Q=2。</p>
+<h2 id="verilog实现">Verilog实现</h2>
+<p>根据搭建出来的Simulink链路，设计了如下的硬件原理图。</p>
+<h3 id="top_model">top_model</h3>
+<img src="/2023/02/20/dpd-2/verilog_top_model.png" class="">
+<center>
+图5 top_model原理图
+</center>
+<p>其中signal
+source模块是读取ROM中测试需要的输入信号，这里使用了Xilinx的IP核。如果工程使用则不需要该模块。</p>
+<h3 id="ilc_model">ILC_model</h3>
+<img src="/2023/02/20/dpd-2/verilog_ILC_model.png" class="">
+<center>
+图6 ILC_model原理图
+</center>
+<p>根据Simulink中ILC子系统链路的构成，可以很容易的得到图6的原理图。由于PA_model模块需要消耗10个时钟周期，因此源信号为了对齐需要延迟10个时钟周期。</p>
+<h3 id="pa_model">PA_model</h3>
+<img src="/2023/02/20/dpd-2/verilog_PA_model.png" class="">
+<center>
+图7 PA_model
+</center>
+<p>根据Ding Lei的论文<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>可知，幅值的奇次幂可以省略，因此这里只计算偶次幂。这也是为了硬件实现上的方便，省去了开根号的操作。同时这里并没有将系数<span
+class="math inline">\(w_{kq}\)</span>存入ROM中进行读取，而是在PA_model_U这个模块中定义输入接口用来传输系数。</p>
+<h3 id="pa_model_u">PA_model_U</h3>
+<img src="/2023/02/20/dpd-2/verilog_PA_model_U.png" class="">
+<center>
+图8 PA_model_U
+</center>
+<p>根据记忆多项式模型可知，需要计算信号幅值的平方，四次方，因此编写了平方计算模块。然后再跟系数和信号相乘，这是复数乘法，因此写了个复数乘法模块。全部乘完之后便是全部加起来，这里同样写了个加法模块。</p>
+<h2 id="ilc仿真">ILC仿真</h2>
+<h3 id="ilc算法验证">ILC算法验证</h3>
+<p>发送信号的频谱图如图9所示。</p>
+<img src="/2023/02/20/dpd-2/source_spectrum.png" class="">
+<center>
+图9 发送信号的频谱图
+</center>
+<p>未使用数字预失真，发送信号直接经过功放时，得到的频谱图和幅值曲线如图10、11所示。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="/2023/02/20/dpd-2/no_dpd.png" class=""></th>
+<th style="text-align: center;"><img src="/2023/02/20/dpd-2/no_dpd_am.png" class=""></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">图10 无DPD的频谱图</td>
+<td style="text-align: center;">图11 无DPD的幅值曲线</td>
+</tr>
+</tbody>
+</table>
+<p>对应的邻道泄露比如表1所示。</p>
+<center>
+表1 无DPD的邻道泄露比
+</center>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ACLR_left</th>
+<th style="text-align: center;">ACLR_right</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">32.9989</td>
+<td style="text-align: center;">32.7445</td>
+</tr>
+</tbody>
+</table>
+<p>使用ILC算法进行迭代，得到如表2所示的邻道泄露比。</p>
+<center>
+表2 ILC迭代的邻道泄露比
+</center>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">迭代次数</th>
+<th style="text-align: center;">ACLR_left</th>
+<th style="text-align: center;">ACLR_right</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">32.9989</td>
+<td style="text-align: center;">32.7445</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">44.5746</td>
+<td style="text-align: center;">43.5187</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">51.3440</td>
+<td style="text-align: center;">50.6581</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">54.3825</td>
+<td style="text-align: center;">53.9590</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">55.2686</td>
+<td style="text-align: center;">55.1073</td>
+</tr>
+</tbody>
+</table>
+<p>这里的ACLR是每次迭代的<span
+class="math inline">\(x_k\)</span>经过功放得到的<span
+class="math inline">\(y_k\)</span>的邻道泄露比。可以发现ILC算法确实能实现数字预失真，并且经过4次迭代趋于收敛。</p>
+<h3 id="simulink仿真">Simulink仿真</h3>
+<p>simulink的仿真过程是将链路中的最终输出经过功放发射再接收。对应的频谱图和幅值曲线如图12、13所示。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="/2023/02/20/dpd-2/simulink_spectrum.png" class=""></th>
+<th style="text-align: center;"><img src="/2023/02/20/dpd-2/simulink_am.png" class=""></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">图12 Simulink仿真的频谱图</td>
+<td style="text-align: center;">图13 Simulink仿真的幅值曲线</td>
+</tr>
+</tbody>
+</table>
+<p>对应的邻道泄露比如表3所示。</p>
+<center>
+表3 Simulink仿真的邻道泄露比
+</center>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ACLR_left</th>
+<th style="text-align: center;">ACLR_right</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">51.6523</td>
+<td style="text-align: center;">50.0904</td>
+</tr>
+</tbody>
+</table>
+<p>可以发现Simulink仿真的ACLR要低于上面ILC算法的最终ACLR。这是因为ILC算法中我们反复经过功放进行迭代，但这只能作为训练时的数据提供。通过这些数据利用记忆多项式模型去表示每次迭代时的等效功放，因此存在求逆、记忆多项式模型造成的误差，最终导致效果变差。</p>
+<h3 id="vivado仿真">Vivado仿真</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="/2023/02/20/dpd-2/simulink_result.png" class=""></th>
+<th style="text-align: center;"><img src="/2023/02/20/dpd-2/simulation_result.png" class=""></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">图14 Simulink的输出结果</td>
+<td style="text-align: center;">图15 Vivado中仿真波形图</td>
+</tr>
+</tbody>
+</table>
+<p>通过对比可以发现二者的计算结果是相同的，这也验证了verilog代码的正确性。</p>
+<p>仿真中将输出信号的实部和虚部分别写入txt文件。通过Matlab读取并整合实部虚部，最终经过功放。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="/2023/02/20/dpd-2/simulation_spectrum.png" class=""></th>
+<th style="text-align: center;"><img src="/2023/02/20/dpd-2/simulation_am.png" class=""></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">图16 硬件仿真的频谱图</td>
+<td style="text-align: center;">图17 硬件仿真的幅值曲线</td>
+</tr>
+</tbody>
+</table>
+<p>对应的邻道泄露比如表4所示。</p>
+<center>
+表4 硬件仿真的邻道泄露比
+</center>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ACLR_left</th>
+<th style="text-align: center;">ACLR_right</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">50.2672</td>
+<td style="text-align: center;">49.1431</td>
+</tr>
+</tbody>
+</table>
+<p>可以发现，硬件仿真的效果相较于软件仿真略微差一点。这是因为硬件仿真考虑到了量化的问题。比如在这里信号的量化方式是16Q15，系数的量化方式是16Q12。</p>
+<h2 id="参考文献">参考文献</h2>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><ol start="8" type="A">
+<li>Paaso, A. Mammela. Comparison of direct learning and indirect
+learning predistortion</li>
+</ol>
+<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<li id="fn2"><p>Dinglei,"Digital Predistort of Power Amplifiers for
+Wireless Application",School of Electrical and Computer Engineering
+Georgia Institute of Technology,March 2004<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DPD/" rel="tag"># DPD</a>
+              <a href="/tags/Matlab/" rel="tag"># Matlab</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/09/fpga-2/" rel="prev" title="FPGA学习-VGA显示">
+                  <i class="fa fa-chevron-left"></i> FPGA学习-VGA显示
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Maoshan Dunkey</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
